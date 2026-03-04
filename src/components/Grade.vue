@@ -3,6 +3,7 @@ import {ref, onMounted, watch, nextTick} from 'vue';
 
 // 使用 Record<string, string> 来声明 exam 的类型
 const exam = ref<Record<string, string>>({
+  querySerialNo: '00228112302228772041',
   realName: '张三',
   bmh: '100199999',
   zkzh: '1234567890',
@@ -16,6 +17,7 @@ const exam = ref<Record<string, string>>({
 
 // fields 数组
 const fields = [
+  {label: '查询流水号', model: 'querySerialNo'},
   {label: '姓名', model: 'realName'},
   {label: '报名号', model: 'bmh'},
   {label: '准考证号', model: 'zkzh'},
@@ -37,7 +39,10 @@ function extractScore(subject: string): number {
 onMounted(() => {
   const savedExam = localStorage.getItem('exam');
   if (savedExam) {
-    exam.value = JSON.parse(savedExam);
+    exam.value = {
+      ...exam.value,
+      ...JSON.parse(savedExam),
+    };
   }
 
   // 页面加载时，调整所有 textarea 的高度
@@ -77,10 +82,13 @@ function adjustTextareaHeight() {
 </script>
 
 <template>
-  <div class="van-cell-group van-hairline--top-bottom van-panel">
+  <div class="van-cell-group van-hairline--top-bottom van-panel grade-panel">
     <div class="van-cell van-hairline van-panel__header"></div>
-    <div class="van-panel__content">
-      <div v-for="field in fields" :key="field.model" class="van-cell van-hairline van-field">
+    <div class="van-panel__content grade-panel__content">
+      <div class="watermark-layer" aria-hidden="true">
+        <span v-for="index in 18" :key="`wm-${index}`" class="watermark-text">浙江大学</span>
+      </div>
+      <div v-for="field in fields" :key="field.model" class="van-cell van-hairline van-field grade-field">
         <div class="van-cell__title"><span>{{ field.label }}</span></div>
         <div class="van-cell__value">
           <div class="van-field__body">
@@ -99,5 +107,36 @@ function adjustTextareaHeight() {
 
 
 <style scoped>
+.grade-panel__content {
+  position: relative;
+  overflow: hidden;
+  background-color: #fff;
+}
 
+.watermark-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: space-around;
+  justify-items: center;
+  gap: 1.2rem 0.4rem;
+  padding: 0.8rem 0.2rem;
+  pointer-events: none;
+}
+
+.watermark-text {
+  color: rgba(0, 0, 0, 0.06);
+  font-size: 0.58rem;
+  transform: rotate(-24deg);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.grade-field {
+  position: relative;
+  z-index: 1;
+  background-color: transparent;
+}
 </style>
