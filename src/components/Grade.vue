@@ -121,7 +121,7 @@ function adjustTextareaHeight() {
   grid-template-columns: repeat(2, minmax(8.5em, 1fr));
   align-content: space-around;
   justify-items: start;
-  gap: clamp(0.9rem, 3.5vw, 1.4rem) clamp(0.2rem, 1.5vw, 0.6rem);
+  gap: clamp(1.65rem, 7vw, 2.1rem) clamp(0.3rem, 2vw, 0.75rem);
   padding: 0.8rem 0.2rem 0.8rem clamp(0.7rem, 5.2vw, 1.05rem);
   pointer-events: none;
 }
