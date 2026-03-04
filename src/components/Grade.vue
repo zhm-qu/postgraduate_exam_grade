@@ -118,17 +118,17 @@ function adjustTextareaHeight() {
   inset: 0;
   z-index: 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(8.5em, 1fr));
   align-content: space-around;
   justify-items: start;
-  gap: 1.2rem 0.4rem;
-  padding: 0.8rem 0.2rem 0.8rem 0.9rem;
+  gap: clamp(0.9rem, 3.5vw, 1.4rem) clamp(0.2rem, 1.5vw, 0.6rem);
+  padding: 0.8rem 0.2rem 0.8rem clamp(0.7rem, 5.2vw, 1.05rem);
   pointer-events: none;
 }
 
 .watermark-text {
   color: rgba(0, 0, 0, 0.06);
-  font-size: 0.373rem;
+  font-size: clamp(0.373rem, 3.6vw, 0.52rem);
   transform: rotate(-24deg);
   white-space: nowrap;
   max-width: 100%;
